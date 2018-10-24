@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Temperature from './Temperature';
 import Icon from './Icon';
+import Corner from './Corner';
 import Information from './Information';
 
 const styles = {
@@ -17,7 +18,8 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        minWidth: '270px'
+        minWidth: '270px',
+        position: 'relative'
     },
     light: {
         background: 'linear-gradient(to bottom, rgba(164,225,243,1) 0%, rgba(251,249,227,1) 100%)'
@@ -37,6 +39,7 @@ const weatherCard = ({classes, timeOfDay, weather, city, day, month, date}) => {
         <Card style={styles[skin]} classes={{
             root: classes.card
         }}>
+            <Corner direction="right"/>
             <Temperature skin={skin} value="10"/>
             <Icon type={weather} timeOfDay={timeOfDay}/>
             <Information city={city} skin={skin} month={month} date={date} day={day}/>
