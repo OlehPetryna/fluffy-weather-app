@@ -1,53 +1,43 @@
-import Card from '@material-ui/core/Card'
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Temperature from './Temperature';
-import Icon from './Icon';
-import Corner from './Corner';
-import Information from './Information';
+import FrontPart from './FrontPart';
+import BackPart from './BackPart';
 
-const styles = {
-    card: {
-        height: '375px',
-        color: '#fff',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        minWidth: '270px',
-        position: 'relative'
-    },
-    light: {
-        background: 'linear-gradient(to bottom, rgba(164,225,243,1) 0%, rgba(251,249,227,1) 100%)'
-    },
-    dark: {
-        background: 'linear-gradient(to bottom, rgba(84,59,142,1) 0%, rgba(252,155,126,1) 100%)'
+
+const wrapperStyles = {
+    background: 'transparent',
+    perspective: '1000px'
+};
+
+const containerStyles = {
+    position: 'relative',
+    transition: 'transform 0.31s ease-in-out',
+    transformStyle: 'preserve-3d',
+};
+
+class WeatherCard extends React.Component {
+    state = {
+        showingFront: true,
+    };
+
+    onFlipTriggered = () => {
+        this.setState((prevState, prevProps) => {return {showingFront: !prevState.showingFront}});
+    };
+
+    render() {
+        return (
+            <div style={wrapperStyles}>
+                <div style={{...containerStyles, transform: this.state.showingFront ? null : 'rotateY(180deg)'}}>
+                    <FrontPart {...this.props} onCornerClick={this.onFlipTriggered} />
+                    <BackPart {...this.props} onCornerClick={this.onFlipTriggered} />
+                </div>
+            </div>
+        )
     }
-};
+}
 
-const getSkin = (timeOfDay) => {
-    return timeOfDay === 'day' ? 'light' : 'dark';
-};
 
-const weatherCard = ({classes, timeOfDay, weather, city, day, month, date}) => {
-    const skin = getSkin(timeOfDay);
-    return (
-        <Card style={styles[skin]} classes={{
-            root: classes.card
-        }}>
-            <Corner direction="right"/>
-            <Temperature skin={skin} value="10"/>
-            <Icon type={weather} timeOfDay={timeOfDay}/>
-            <Information city={city} skin={skin} month={month} date={date} day={day}/>
-        </Card>
-    )
-};
-
-weatherCard.propTypes = {
+WeatherCard.propTypes = {
     classes: PropTypes.object.isRequired,
     timeOfDay: PropTypes.string.isRequired,
     weather: PropTypes.string.isRequired,
@@ -58,4 +48,4 @@ weatherCard.propTypes = {
 };
 
 
-export default withStyles(styles)(weatherCard);
+export default WeatherCard;

@@ -6,7 +6,6 @@ const cornerStyles = {
         position: 'absolute',
         top: '0',
         display: 'flex',
-        justifyContent: 'flex-end',
         alignItems: 'flex-end',
         height: '22px',
         width: '28px',
@@ -24,6 +23,7 @@ const cornerStyles = {
         color: '#fff',
     },
     left: {
+        justifyContent: 'flex-start',
         textAlign: 'left',
         left: '0',
         paddingLeft: '3px',
@@ -32,6 +32,7 @@ const cornerStyles = {
     right: {
         textAlign: 'right',
         paddingRight: '3px',
+        justifyContent: 'flex-end',
         right: '0',
         borderBottomLeftRadius: '50px'
     }
@@ -59,15 +60,16 @@ class Corner extends React.Component {
     render() {
         const styles = {...cornerStyles.generic, ...cornerStyles[this.props.direction], ...this.state};
         return this.props.direction === 'left' ? (
-            <span onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} style={styles}>&larr;</span>
+            <span onClick={(e) => this.props.onClick(e)} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} style={styles}>&larr;</span>
         ) : (
-            <span onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} style={styles}>&rarr;</span>
+            <span onClick={(e) => this.props.onClick(e)} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} style={styles}>&rarr;</span>
         );
     }
 }
 
 Corner.propTypes = {
     direction: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
 };
 
 
