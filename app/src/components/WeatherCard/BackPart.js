@@ -2,16 +2,18 @@ import Card from '@material-ui/core/Card'
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
+import RootRef from '@material-ui/core/RootRef';
+import Divider from '@material-ui/core/Divider';
 import Temperature from './Temperature';
 import Icon from './Icon';
 import Corner from './Corner';
-import Information from './Information';
+import ForecastItem from './ForecastItem';
 
 const styles = {
     card: {
-        height: '375px',
+        height: '475px',
+        overflow: 'auto',
         color: '#fff',
         width: '100%',
         display: 'flex',
@@ -23,8 +25,16 @@ const styles = {
         position: 'absolute',
         transform: 'rotateY(180deg)'
     },
-    light: {
-        background: 'linear-gradient(to bottom, rgba(164,225,243,1) 0%, rgba(251,249,227,1) 100%)'
+    corner: {
+        color: '#FFF',
+        background: 'rgba(70,99,132, 0.35)'
+    },
+    cornerHover: {
+        background: 'rgba(70,99,132, 1)'
+    },
+    list: {
+        width: '100%',
+        marginTop: '70px',
     },
     dark: {
         background: 'linear-gradient(to bottom, rgba(84,59,142,1) 0%, rgba(252,155,126,1) 100%)'
@@ -35,19 +45,31 @@ const getSkin = (timeOfDay) => {
     return timeOfDay === 'day' ? 'light' : 'dark';
 };
 
-const backPart = ({classes, onCornerClick, timeOfDay, weather, city, day, month, date}) => {
+const backPart = React.forwardRef(({classes, onCornerClick, timeOfDay, forecast}, ref) => {
     const skin = getSkin(timeOfDay);
     return (
-        <Card style={styles[skin]} classes={{
-            root: classes.card
-        }}>
-            <Corner onClick={onCornerClick} direction="left"/>
-            <Temperature skin={skin} value="10"/>
-            <Icon type={weather} timeOfDay={timeOfDay}/>
-            <Information city={city} skin={skin} month={month} date={date} day={day}/>
-        </Card>
+        <RootRef rootRef={ref}>
+            <Card classes={{
+                root: classes.card
+            }}>
+                <Corner onClick={onCornerClick} direction="left" cornerStyles={styles.corner} cornerHoverStyles={styles.cornerHover}/>
+                <List style={styles.list}>
+                    {
+                        forecast.map(
+                            (v, i) => (
+                                <React.Fragment key={i}>
+                                    <Divider/>
+                                    <ForecastItem day={v.day} temperature={v.temperature} nightTemperature={v.nightTemperature} weather={v.weather}/>
+                                </React.Fragment>
+                            )
+                        )
+                    }
+                </List>
+            </Card>
+        </RootRef>
+
     )
-};
+});
 
 backPart.propTypes = {
     classes: PropTypes.object.isRequired,
@@ -55,6 +77,7 @@ backPart.propTypes = {
     onCornerClick: PropTypes.func.isRequired,
     weather: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
+    forecast: PropTypes.array.isRequired,
     date: PropTypes.number.isRequired,
     month: PropTypes.string.isRequired,
     day: PropTypes.string.isRequired,

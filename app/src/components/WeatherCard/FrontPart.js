@@ -2,8 +2,7 @@ import Card from '@material-ui/core/Card'
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import RootRef from '@material-ui/core/RootRef';
 import Temperature from './Temperature';
 import Icon from './Icon';
 import Corner from './Corner';
@@ -35,19 +34,21 @@ const getSkin = (timeOfDay) => {
     return timeOfDay === 'day' ? 'light' : 'dark';
 };
 
-const frontPart = ({classes, onCornerClick, timeOfDay, weather, city, day, month, date}) => {
+const frontPart = React.forwardRef(({classes, onCornerClick, timeOfDay, weather, city, day, month, date}, ref) => {
     const skin = getSkin(timeOfDay);
     return (
-        <Card style={styles[skin]} classes={{
-            root: classes.card
-        }}>
-            <Corner onClick={onCornerClick} direction="right"/>
-            <Temperature skin={skin} value="10"/>
-            <Icon type={weather} timeOfDay={timeOfDay}/>
-            <Information city={city} skin={skin} month={month} date={date} day={day}/>
-        </Card>
+        <RootRef rootRef={ref}>
+            <Card style={styles[skin]} classes={{
+                root: classes.card
+            }}>
+                <Corner onClick={onCornerClick} direction="right"/>
+                <Temperature skin={skin} value="10"/>
+                <Icon type={weather} timeOfDay={timeOfDay}/>
+                <Information city={city} skin={skin} month={month} date={date} day={day}/>
+            </Card>
+        </RootRef>
     )
-};
+});
 
 frontPart.propTypes = {
     classes: PropTypes.object.isRequired,

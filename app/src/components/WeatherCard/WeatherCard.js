@@ -16,20 +16,44 @@ const containerStyles = {
 };
 
 class WeatherCard extends React.Component {
-    state = {
-        showingFront: true,
-    };
+    constructor(props) {
+        super(props);
+        this.frontFaceRef = React.createRef();
+        this.backFaceRef = React.createRef();
+        this.parentRef = React.createRef();
+        this.state = {
+            showingFront: true,
+        };
+    }
 
     onFlipTriggered = () => {
-        this.setState((prevState, prevProps) => {return {showingFront: !prevState.showingFront}});
+        this.setState((prevState, prevProps) => {
+            return {showingFront: !prevState.showingFront}
+        }, this.resize);
     };
+
+    shownFaceRef = () => this.state.showingFront ? this.frontFaceRef : this.backFaceRef;
+
+    resize = () => {
+        this.parentRef.current.style.width = this.shownFaceRef().current.clientWidth + 'px';
+        this.parentRef.current.style.height = this.shownFaceRef().current.clientHeight + 'px';
+    };
+
+    componentDidMount() {
+        this.resize();
+    }
+
+    componentDidUpdate() {
+        this.resize();
+    }
 
     render() {
         return (
             <div style={wrapperStyles}>
-                <div style={{...containerStyles, transform: this.state.showingFront ? null : 'rotateY(180deg)'}}>
-                    <FrontPart {...this.props} onCornerClick={this.onFlipTriggered} />
-                    <BackPart {...this.props} onCornerClick={this.onFlipTriggered} />
+                <div ref={this.parentRef}
+                     style={{...containerStyles, transform: this.state.showingFront ? null : 'rotateY(180deg)'}}>
+                    <FrontPart {...this.props} innerRef={this.frontFaceRef} onCornerClick={this.onFlipTriggered}/>
+                    <BackPart {...this.props}  innerRef={this.backFaceRef} onCornerClick={this.onFlipTriggered}/>
                 </div>
             </div>
         )
@@ -39,6 +63,7 @@ class WeatherCard extends React.Component {
 
 WeatherCard.propTypes = {
     classes: PropTypes.object.isRequired,
+    forecast: PropTypes.array.isRequired,
     timeOfDay: PropTypes.string.isRequired,
     weather: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,

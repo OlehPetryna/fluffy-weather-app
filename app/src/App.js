@@ -1,26 +1,47 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import WeatherCard from './components/WeatherCard/WeatherCard';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <WeatherCard weather="storm" timeOfDay="night" city="Kyiv" date="25" month="MAY" day="Wednesday" forecast={[{
+            day: 'Thursday',
+            temperature: 15,
+            nightTemperature: 5,
+            weather: 'clear',
+        }, {
+            day: 'Wednesday',
+            temperature: 25,
+            nightTemperature: -1,
+            weather: 'rain',
+        },{
+            day: 'Tuesday',
+            temperature: 15,
+            nightTemperature: 5,
+            weather: 'snow',
+        }, {
+            day: 'Thursday',
+            temperature: 15,
+            nightTemperature: 5,
+            weather: 'clear',
+        }, {
+            day: 'Thursday',
+            temperature: 15,
+            nightTemperature: 5,
+            weather: 'clear',
+        }, {
+            day: 'Thursday',
+            temperature: 15,
+            nightTemperature: 5,
+            weather: 'clear',
+        }, {
+            day: 'Thursday',
+            temperature: 15,
+            nightTemperature: 5,
+            weather: 'clear',
+        }]}/>
     );
   }
 }

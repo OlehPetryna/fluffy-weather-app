@@ -45,10 +45,10 @@ const iconsMap = {
     }
 };
 
-const icon = (props) => {
+const icon = ({type, timeOfDay, wrapperCss = {}, imageCss = {}}) => {
     return (
-        <div style={wrapperStyles}>
-            <img title={props.type} style={genericImageStyles} src={process.env.PUBLIC_URL + iconsMap[props.timeOfDay][props.type]}/>
+        <div style={{...wrapperStyles, ...wrapperCss}}>
+            <img title={type} style={{...genericImageStyles, ...imageCss}} src={process.env.PUBLIC_URL + iconsMap[timeOfDay][type]}/>
         </div>
     );
 };
