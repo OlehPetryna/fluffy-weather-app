@@ -9,6 +9,7 @@ import Temperature from './Temperature';
 import Icon from './Icon';
 import Corner from './Corner';
 import ForecastItem from './ForecastItem';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
     card: {
@@ -25,6 +26,11 @@ const styles = {
         position: 'absolute',
         transform: 'rotateY(180deg)'
     },
+    heading: {
+        letterSpacing: '2px',
+        color: '#466384',
+        paddingTop: '20px'
+    },
     corner: {
         color: '#FFF',
         background: 'rgba(70,99,132, 0.35)'
@@ -34,7 +40,7 @@ const styles = {
     },
     list: {
         width: '100%',
-        marginTop: '70px',
+        // marginTop: '70px',
     },
     dark: {
         background: 'linear-gradient(to bottom, rgba(84,59,142,1) 0%, rgba(252,155,126,1) 100%)'
@@ -45,7 +51,7 @@ const getSkin = (timeOfDay) => {
     return timeOfDay === 'day' ? 'light' : 'dark';
 };
 
-const backPart = React.forwardRef(({classes, onCornerClick, timeOfDay, forecast}, ref) => {
+const backPart = React.forwardRef(({classes, onCornerClick, timeOfDay, forecast, city}, ref) => {
     const skin = getSkin(timeOfDay);
     return (
         <RootRef rootRef={ref}>
@@ -53,6 +59,7 @@ const backPart = React.forwardRef(({classes, onCornerClick, timeOfDay, forecast}
                 root: classes.card
             }}>
                 <Corner onClick={onCornerClick} direction="left" cornerStyles={styles.corner} cornerHoverStyles={styles.cornerHover}/>
+                <Typography style={styles.heading} variant="h4">{city}</Typography>
                 <List style={styles.list}>
                     {
                         forecast.map(

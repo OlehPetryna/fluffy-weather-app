@@ -10,7 +10,7 @@ import Information from './Information';
 
 const styles = {
     card: {
-        height: '375px',
+        height: '475px',
         color: '#fff',
         width: '100%',
         display: 'flex',

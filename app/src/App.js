@@ -6,7 +6,7 @@ import WeatherCard from './components/WeatherCard/WeatherCard';
 class App extends Component {
   render() {
     return (
-        <WeatherCard weather="storm" timeOfDay="night" city="Kyiv" date="25" month="MAY" day="Wednesday" forecast={[{
+        <WeatherCard weather="storm" timeOfDay="day" city="Kyiv" date="25" month="MAY" day="Wednesday" forecast={[{
             day: 'Thursday',
             temperature: 15,
             nightTemperature: 5,

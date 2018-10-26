@@ -6,7 +6,8 @@ import BackPart from './BackPart';
 
 const wrapperStyles = {
     background: 'transparent',
-    perspective: '1000px'
+    perspective: '1000px',
+    width: '320px'
 };
 
 const containerStyles = {
