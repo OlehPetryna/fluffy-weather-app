@@ -71,6 +71,7 @@ WeatherCard.propTypes = {
     date: PropTypes.number.isRequired,
     month: PropTypes.string.isRequired,
     day: PropTypes.string.isRequired,
+    temperature: PropTypes.number.isRequired,
 };
 
 

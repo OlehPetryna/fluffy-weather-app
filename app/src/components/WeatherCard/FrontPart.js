@@ -34,7 +34,7 @@ const getSkin = (timeOfDay) => {
     return timeOfDay === 'day' ? 'light' : 'dark';
 };
 
-const frontPart = React.forwardRef(({classes, onCornerClick, timeOfDay, weather, city, day, month, date}, ref) => {
+const frontPart = React.forwardRef(({temperature, classes, onCornerClick, timeOfDay, weather, city, day, month, date}, ref) => {
     const skin = getSkin(timeOfDay);
     return (
         <RootRef rootRef={ref}>
@@ -42,7 +42,7 @@ const frontPart = React.forwardRef(({classes, onCornerClick, timeOfDay, weather,
                 root: classes.card
             }}>
                 <Corner onClick={onCornerClick} direction="right"/>
-                <Temperature skin={skin} value="10"/>
+                <Temperature skin={skin} value={temperature}/>
                 <Icon type={weather} timeOfDay={timeOfDay}/>
                 <Information city={city} skin={skin} month={month} date={date} day={day}/>
             </Card>
