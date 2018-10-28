@@ -42,6 +42,7 @@ class App extends Component {
     renderCities(chunk, cityNames) {
         const date = new Date();
         const currentDay = date.getDay();
+        const hour = date.getHours();
         return chunk.map((city, index) => {
             const dayOfWeek = getDayOfWeek(currentDay - 1);
 
@@ -51,7 +52,7 @@ class App extends Component {
                     <WeatherCard
                         temperature={periods[0].avgTempC}
                         weather={periods[0].weather || periods[0].weatherPrimary}
-                        timeOfDay="day"
+                        timeOfDay={hour < 20 && hour > 6 ? 'day' : 'night' }
                         city={cityNames[index]}
                         date={date.getDate()}
                         month={monthMap[date.getMonth()]}
