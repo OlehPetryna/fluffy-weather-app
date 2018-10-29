@@ -64,7 +64,6 @@ const iconsMap = {
 };
 
 const pickRandomIcon = (timeOfDay, weather) => {
-    console.log("random icon", timeOfDay, weather);
     if (/rain/ig.test(weather) || /shower/ig.test(weather)) {
         return iconsMap[timeOfDay]['Rain showers'];
     } else if (/snow/ig.test(weather)) {
