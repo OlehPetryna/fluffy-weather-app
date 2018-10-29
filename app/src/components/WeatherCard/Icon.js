@@ -63,10 +63,28 @@ const iconsMap = {
     }
 };
 
+const pickRandomIcon = (timeOfDay, weather) => {
+    console.log("random icon", timeOfDay, weather);
+    if (/rain/ig.test(weather) || /shower/ig.test(weather)) {
+        return iconsMap[timeOfDay]['Rain showers'];
+    } else if (/snow/ig.test(weather)) {
+        return iconsMap[timeOfDay]['Snow'];
+    } else if (/drizzle/ig.test(weather)) {
+        return iconsMap[timeOfDay]['Drizzle'];
+    } else if (/cloud/ig.test(weather)) {
+        return iconsMap[timeOfDay]['Cloudy'];
+    } else {
+        return iconsMap[timeOfDay]['Clear'];
+    }
+};
+
 const icon = ({type, timeOfDay, wrapperCss = {}, imageCss = {}}) => {
     return (
         <div style={{...wrapperStyles, ...wrapperCss}}>
-            <img title={type} style={{...genericImageStyles, ...imageCss}} src={process.env.PUBLIC_URL + iconsMap[timeOfDay][type]}/>
+            <img
+                title={type}
+                style={{...genericImageStyles, ...imageCss}}
+                src={process.env.PUBLIC_URL + (iconsMap[timeOfDay][type] || pickRandomIcon(timeOfDay, type))}/>
         </div>
     );
 };
