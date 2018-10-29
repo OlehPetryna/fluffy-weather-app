@@ -66,7 +66,12 @@ const backPart = React.forwardRef(({classes, onCornerClick, timeOfDay, forecast,
                             (v, i) => (
                                 <React.Fragment key={i}>
                                     <Divider/>
-                                    <ForecastItem day={v.day} temperature={v.temperature} nightTemperature={v.nightTemperature} weather={v.weather}/>
+                                    <ForecastItem
+                                        day={v.day}
+                                        temperature={v.temperature}
+                                        nightTemperature={v.nightTemperature}
+                                        timeOfDay={timeOfDay}
+                                        weather={v.weather}/>
                                 </React.Fragment>
                             )
                         )

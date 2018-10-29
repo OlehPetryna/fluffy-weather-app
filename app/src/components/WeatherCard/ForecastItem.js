@@ -35,14 +35,14 @@ const styles = {
     }
 };
 
-const forecastItem = ({day, temperature, nightTemperature, weather}) => {
+const forecastItem = ({day, temperature, nightTemperature, weather, timeOfDay}) => {
     return (
         <ListItem style={styles.item}>
             <Typography variant="subtitle2" style={styles.day}>{day}</Typography>
             <Typography variant="subtitle2" style={styles.temperatures}>{temperature}<sup
                 style={{fontSize: '0.5em'}}>&deg;C</sup><span style={styles.nightTemperature}>{nightTemperature}<sup
                 style={{fontSize: '0.5em'}}>&deg;C</sup></span></Typography>
-            <Icon type={weather} timeOfDay="day" wrapperCss={styles.image} imageCss={styles.image}/>
+            <Icon type={weather} timeOfDay={timeOfDay} wrapperCss={styles.image} imageCss={styles.image}/>
         </ListItem>
     );
 };
