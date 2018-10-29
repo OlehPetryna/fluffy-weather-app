@@ -10,8 +10,13 @@ import { cities, dayMap, monthMap } from '../const';
 function getDayOfWeek(day){
     let dayOfWeek = day;
     return () => {
+        let day;
+        if(dayOfWeek === 7) {
+            day = 0;
+            dayOfWeek = 0;
+        } else day = dayOfWeek;
         dayOfWeek++;
-        return day === 7 ? 0 : dayOfWeek;
+        return day;
     };
 }
 
@@ -37,7 +42,7 @@ class App extends Component {
         const currentDay = date.getDay();
         const hour = date.getHours();
         return chunk.map((city, index) => {
-            const dayOfWeek = getDayOfWeek(currentDay - 1);
+            const dayOfWeek = getDayOfWeek(currentDay);
             const periods = city.response[0].periods;
             return (
                 <Grid justify="center" style={{ display: 'flex' }} item xs={12} sm={6} md={4} lg={3}>
