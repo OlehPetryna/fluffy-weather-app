@@ -26,14 +26,7 @@ class App extends Component {
         for (i = 0,j = this.props.cities.length; i < j; i += chunk) {
             tempArray = this.props.cities.slice(i,i + chunk);
             res.push(
-                <Grid
-                    container
-                    item
-                    xs={12}
-                    justify="space-around"
-                >
-                    {this.renderCities(tempArray, cities.slice(i, i + chunk))}
-                </Grid>
+                this.renderCities(tempArray, cities.slice(i, i + chunk))
             );
         }
         return res;
@@ -45,10 +38,9 @@ class App extends Component {
         const hour = date.getHours();
         return chunk.map((city, index) => {
             const dayOfWeek = getDayOfWeek(currentDay - 1);
-
             const periods = city.response[0].periods;
             return (
-                <Grid justify="center" style={{ display: 'flex' }} item xs={3}>
+                <Grid justify="center" style={{ display: 'flex' }} item xs={12} sm={6} md={4} lg={3}>
                     <WeatherCard
                         temperature={periods[0].avgTempC}
                         weather={periods[0].weather || periods[0].weatherPrimary}

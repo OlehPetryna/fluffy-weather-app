@@ -21,7 +21,7 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        minWidth: '270px',
+        minWidth: '320px',
         backfaceVisibility: 'hidden',
         position: 'absolute',
         transform: 'rotateY(180deg)'
