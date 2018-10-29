@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Select from 'react-select';
 import '../App.css';
 import WeatherCard from '../components/WeatherCard/WeatherCard';
@@ -85,22 +86,27 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
-                <Select
-                    value={this.state.selectedOptions}
-                    onChange={this.handleChange}
-                    options={options()}
-                    isMulti
-                    isSearchable
-                    placeholder="Start typing city name"
-                />
-                <Grid
-                    container
-                    direction="row"
-                    spacing={32}
-                    alignContent="space-around"
-                >
-                    {this.createChunks.bind(this)()}
-                </Grid>
+                {!this.props.cities.length ?
+                    <CircularProgress size={50} /> : (
+                        <React.Fragment>
+                            <Select
+                                value={this.state.selectedOptions}
+                                onChange={this.handleChange}
+                                options={options()}
+                                isMulti
+                                isSearchable
+                                placeholder="Start typing city name"
+                                isClearable={false}
+                            />
+                            <Grid
+                                container
+                                direction="row"
+                                spacing={32}
+                                alignContent="space-around"
+                            >
+                                {this.createChunks.bind(this)()}
+                            </Grid>
+                        </React.Fragment>)}
             </React.Fragment>
         );
     }
