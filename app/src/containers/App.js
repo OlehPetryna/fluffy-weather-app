@@ -87,7 +87,7 @@ class App extends Component {
         return (
             <React.Fragment>
                 {!this.props.cities.length ?
-                    <CircularProgress size={50} /> : (
+                    <CircularProgress style={{position: 'absolute', top: 'calc(50% - 50px)', left: 'calc(50% - 50px)'}} size={100} /> : (
                         <React.Fragment>
                             <Select
                                 value={this.state.selectedOptions}
