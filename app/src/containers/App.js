@@ -4,6 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Select from '../components/Select/Select';
 import '../App.css';
 import WeatherCard from '../components/WeatherCard/WeatherCard';
+import Zoom from '@material-ui/core/Zoom';
 
 import { connect } from 'react-redux';
 import { fetchCities } from '../action';
@@ -55,27 +56,30 @@ class App extends Component {
         const date = new Date();
         const currentDay = date.getDay();
         const hour = date.getHours();
-        return chunk.map(city => {
+        return chunk.map((city, idx) => {
             const dayOfWeek = getDayOfWeek(currentDay);
             const periods = city.response[0].periods;
             return (
-                <Grid justify="center" style={{ display: 'flex' }} item xs={12} sm={6} md={4} lg={3}>
-                    <WeatherCard
-                        temperature={periods[0].avgTempC}
-                        weather={periods[0].weather || periods[0].weatherPrimary}
-                        timeOfDay={hour < 20 && hour > 6 ? 'day' : 'night' }
-                        city={city.cityName}
-                        date={date.getDate()}
-                        month={monthMap[date.getMonth()]}
-                        day={dayMap[currentDay].toUpperCase()}
-                        forecast={periods.map(per => ({
-                            day: dayMap[dayOfWeek()],
-                            temperature: per.maxTempC,
-                            nightTemperature: per.minTempC,
-                            weather: per.weather,
-                        }))}
-                    />
-                </Grid>);
+                <Zoom in style={{transitionDelay: 150 + (idx * 100)}}>
+                    <Grid justify="center" style={{display: 'flex'}} item xs={12} sm={6} md={4} lg={3}>
+                        <WeatherCard
+                            temperature={periods[0].avgTempC}
+                            weather={periods[0].weather || periods[0].weatherPrimary}
+                            timeOfDay={hour < 20 && hour > 6 ? 'day' : 'night'}
+                            city={city.cityName}
+                            date={date.getDate()}
+                            month={monthMap[date.getMonth()]}
+                            day={dayMap[currentDay].toUpperCase()}
+                            forecast={periods.map(per => ({
+                                day: dayMap[dayOfWeek()],
+                                temperature: per.maxTempC,
+                                nightTemperature: per.minTempC,
+                                weather: per.weather,
+                            }))}
+                        />
+                    </Grid>
+                </Zoom>
+            );
         });
     }
 
