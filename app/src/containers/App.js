@@ -38,26 +38,16 @@ class App extends Component {
         this.props.fetchCities();
     }
 
-    createChunks() {
-        const selectedCities = this.state.selectedOptions.map(opt => opt.label);
-        const filteredArrayOfCities = this.props.cities.filter(city => selectedCities.includes(city.cityName));
-        let i,j,tempArray,chunk = 4;
-        let res = [];
-        for (i = 0,j = filteredArrayOfCities.length; i < j; i += chunk) {
-            tempArray = filteredArrayOfCities.slice(i,i + chunk);
-            res.push(
-                this.renderCities(tempArray, cities.slice(i, i + chunk))
-            );
-        }
-        return res;
-    }
+    renderCities() {
+        const selectedOptions = this.state.selectedOptions.reduce((acc, v) => {acc[v.value.toLowerCase()] = v.value; return acc}, {});
+        const filteredArrayOfCities = this.props.cities.filter(city => city.cityName.toLowerCase() in selectedOptions);
 
-    renderCities(chunk) {
         const date = new Date();
         const currentDay = date.getDay();
         const hour = date.getHours();
-        return chunk.map((city, idx) => {
-            const dayOfWeek = getDayOfWeek(currentDay);
+        const dayOfWeek = getDayOfWeek(currentDay);
+
+        return filteredArrayOfCities.map((city, idx) => {
             const periods = city.response[0].periods;
             return (
                 <Zoom in style={{transitionDelay: 150 + (idx * 100)}}>
@@ -108,7 +98,7 @@ class App extends Component {
                                 spacing={32}
                                 alignContent="space-around"
                             >
-                                {this.createChunks.bind(this)()}
+                                {this.renderCities.bind(this)()}
                             </Grid>
                         </React.Fragment>)}
             </React.Fragment>
